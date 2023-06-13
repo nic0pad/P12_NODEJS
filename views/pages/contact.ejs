@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include ("../partials/header.ejs") %>
+</head>
+
+<body>
+
+<%- include ("../partials/nav.ejs") %>
+
+<div class="container">
+<h2>Contact</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <td><%= contact.name %></td>
+  </tr>
+  <tr>
+    <th>Email</th>
+    <td><%= contact.email %></td>
+  </tr>
+  <tr>
+    <th>Phone</th>
+    <td><%= contact.phone %></td>
+  </tr>
+</table>
+
+</div>
+
+</body>
+</html>

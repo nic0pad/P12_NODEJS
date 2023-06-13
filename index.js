@@ -18,6 +18,25 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
+  .get('/login', (req, res) => res.render('pages/login'))
+  .post('/login', async (req, res) => {
+    try {
+      var email = req.body.email;
+      var password = req.body.password;
+      const client = await pool.connect();
+      const result = await client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password]);
+      const contact = (result) ? result : null;
+      if (contact == null) {
+        res.render('pages/login');
+      } else {
+        res.render('pages/contact', contact );
+      }
+      client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
+  })
   .get('/db', async (req, res) => {
     try {
       const client = await pool.connect();

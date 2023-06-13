@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include ("../partials/header.ejs") %>
+</head>
+
+<body>
+
+<%- include ("../partials/nav.ejs") %>
+
+<div class="container">
+<h2>Login</h2>
+
+<form action="/login" method="POST">
+  <label>Email: </label>
+  <input type="text" placeholder="Email" name="email"><br><br>
+  <label>Password: </label>
+  <input type="password" placeholder="" name="password"><br><br>
+  <!-- Creating the submit button -->
+  <button>Submit</button>
+</form>
+
+</div>
+
+</body>
+</html>
