@@ -29,8 +29,8 @@ express()
   .post('/login', (req, res) => {
     try {
       console.log(req);
-      var email = req.email;
-      var password = req.password;
+      var email = req.body.email;
+      var password = req.body.password;
       client.connect();
       const result = client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password]);
       console.log(email);
