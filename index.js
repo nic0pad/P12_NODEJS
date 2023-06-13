@@ -21,12 +21,16 @@ express()
   .get('/login', (req, res) => res.render('pages/login'))
   .post('/login', async (req, res) => {
     try {
+      console.log(req);
       var email = req.email;
       var password = req.password;
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password]);
+      console.log(email);
+      console.log(password);
+      console.log(result.rowCount);
+      console.log(result);
       if (result.rowCount == 1) {
-        console.log(result);
         res.render('pages/contact', { 'contact': result.rows[0] } );
       } else {
         res.render('pages/login');
