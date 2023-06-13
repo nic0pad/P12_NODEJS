@@ -25,11 +25,11 @@ express()
       var password = req.password;
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password]);
-      if (result == null) {
-        res.render('pages/login');
-      } else {
+      if (result.rowCount == 1) {
         console.log(result);
-        res.render('pages/contact', { 'contact': result } );
+        res.render('pages/contact', { 'contact': result.rows[0] } );
+      } else {
+        res.render('pages/login');
       }
       client.release();
     } catch (err) {
