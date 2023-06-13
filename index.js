@@ -21,8 +21,8 @@ express()
   .get('/login', (req, res) => res.render('pages/login'))
   .post('/login', async (req, res) => {
     try {
-      var email = req.body.email;
-      var password = req.body.password;
+      var email = req.email;
+      var password = req.password;
       const client = await pool.connect();
       const result = await client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password]);
       const contact = (result) ? result : null;
