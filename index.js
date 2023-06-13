@@ -19,13 +19,13 @@ express()
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/login', (req, res) => res.render('pages/login'))
-  .post('/login', async (req, res) => {
+  .post('/login', (req, res) => {
     try {
       console.log(req);
       var email = req.email;
       var password = req.password;
-      const client = await pool.connect();
-      const result = await client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password]);
+      const client = pool.connect();
+      const result = client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password]);
       console.log(email);
       console.log(password);
       console.log(result.rowCount);
