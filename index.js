@@ -2,7 +2,7 @@ const cool = require('cool-ascii-faces')
 const express = require('express')
 const path = require('path')
 
-const { Pool } = require('pg')
+const { Pool, Client } = require('pg')
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -10,6 +10,13 @@ const pool = new Pool({
     rejectUnauthorized: false
   }
 })
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
 const PORT = process.env.PORT || 5001
 
@@ -24,7 +31,7 @@ express()
       console.log(req);
       var email = req.email;
       var password = req.password;
-      const client = pool.connect();
+      client.connect();
       const result = client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password]);
       console.log(email);
       console.log(password);
@@ -35,7 +42,7 @@ express()
       } else {
         res.render('pages/login');
       }
-      client.release();
+      client.end();
     } catch (err) {
       console.error(err);
       res.send("Error " + err);
