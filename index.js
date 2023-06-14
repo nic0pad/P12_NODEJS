@@ -34,13 +34,13 @@ express()
       console.log(email);
       console.log(password);
       client.connect();
-      client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password], (err, res) => {
-        if (err) throw err;
+      client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password], (error, result) => {
+        if (error) throw error;
 
-        console.log(res.rowCount);
-        console.log(res);
-        if (res.rowCount == 1) {
-          res.render('pages/contact', { 'contact': res.rows[0] } );
+        console.log(result.rowCount);
+        console.log(result);
+        if (result.rowCount == 1) {
+          res.render('pages/contact', { 'contact': result.rows[0] } );
         } else {
           res.render('pages/login');
         }
