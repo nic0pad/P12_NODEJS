@@ -65,7 +65,7 @@ express()
   .get('/profile', async (req, res) => {
     try {
       const client = await pool.connect();
-      const result = await client.query('SELECT * FROM salesforce.contact WHERE id=$1', ['0037Q00000o3BFDQA2']);
+      const result = await client.query('SELECT * FROM salesforce.contact WHERE Sfid=$1', ['0037Q00000o3BFDQA2']);
       if (result.rowCount == 1) {
         res.render('pages/profile', { 'contact': result.rows[0] } );
       } else {
