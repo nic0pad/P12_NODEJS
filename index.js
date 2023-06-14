@@ -40,7 +40,7 @@ express()
         console.log(result.rowCount);
         console.log(result);
         if (result.rowCount == 1) {
-          res.render('pages/contact', { 'contact': result.rows[0] } );
+          res.render('pages/profile', { 'contact': result.rows[0] } );
         } else {
           res.render('pages/login', { 'error' : 'Wrong Email or Password !' });
         }
@@ -56,6 +56,21 @@ express()
       const result = await client.query('SELECT * FROM salesforce.product2');
       const results = { 'results': (result) ? result.rows : null};
       res.render('pages/products', results );
+      client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
+  })
+  .get('/profile', async (req, res) => {
+    try {
+      const client = await pool.connect();
+      const result = await client.query('SELECT * FROM salesforce.contact WHERE id=$1', ['0037Q00000o3BFDQA2']);
+      if (result.rowCount == 1) {
+        res.render('pages/profile', { 'contact': result.rows[0] } );
+      } else {
+        res.render('pages/profile', { 'contact': null } );
+      }
       client.release();
     } catch (err) {
       console.error(err);
