@@ -11,11 +11,24 @@
 <div class="container">
 <h2>Products</h2>
 
-<ul>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Product Class</th>
+      <th>Product Code</th>
+    </tr>
+  </thead>
+  <tbody>
     <% results.forEach(function(r) { %>
-        <li><%= r.id %> - <%= r.name %> (<%= r.description %>)</li>
+    <tr>
+      <td><%= r.name %></td>
+      <td><%= r.productclass %></td>
+      <td><%= r.productcode %></td>
+    </tr>
     <% }); %>
-</ul>
+  </tbody>
+</table>
 
 </div>
 
