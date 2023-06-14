@@ -50,12 +50,12 @@ express()
       res.render('pages/login', { 'error' : 'Error, contact admin !' });
     }
   })
-  .get('/db', async (req, res) => {
+  .get('/products', async (req, res) => {
     try {
       const client = await pool.connect();
-      const result = await client.query('SELECT * FROM salesforce.contact');
+      const result = await client.query('SELECT * FROM salesforce.product2');
       const results = { 'results': (result) ? result.rows : null};
-      res.render('pages/db', results );
+      res.render('pages/products', results );
       client.release();
     } catch (err) {
       console.error(err);
