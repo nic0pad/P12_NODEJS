@@ -16,6 +16,9 @@
   <input type="text" placeholder="Email" name="email"><br><br>
   <label>Password: </label>
   <input type="password" placeholder="" name="password"><br><br>
+  <% if (error) { %>
+  <red><%= error %></red>
+  <% } %>
   <!-- Creating the submit button -->
   <button>Submit</button>
 </form>

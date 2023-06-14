@@ -26,7 +26,7 @@ express()
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
-  .get('/login', (req, res) => res.render('pages/login'))
+  .get('/login', (req, res) => res.render('pages/login', { 'error' : ''}))
   .post('/login', (req, res) => {
     try {
       var email = req.body.email;
@@ -42,13 +42,13 @@ express()
         if (result.rowCount == 1) {
           res.render('pages/contact', { 'contact': result.rows[0] } );
         } else {
-          res.render('pages/login');
+          res.render('pages/login', { 'error' : 'Wrong Email or Password !' });
         }
         client.end();
       });
     } catch (err) {
       console.error(err);
-      res.send("Error " + err);
+      res.render('pages/login', { 'error' : 'Error, contact admin !' });
     }
   })
   .get('/db', async (req, res) => {
