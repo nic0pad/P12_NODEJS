@@ -17,6 +17,7 @@ const client = new Client({
     rejectUnauthorized: false
   }
 });
+client.connect();
 
 const PORT = process.env.PORT || 5001
 
@@ -33,7 +34,6 @@ express()
       var password = req.body.password;
       console.log(email);
       console.log(password);
-      client.connect();
       client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password], (error, result) => {
         if (error) throw error;
 
@@ -44,7 +44,6 @@ express()
         } else {
           res.render('pages/login', { 'error' : 'Wrong Email or Password !' });
         }
-        client.end();
       });
     } catch (err) {
       console.error(err);
