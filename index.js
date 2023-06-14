@@ -31,18 +31,21 @@ express()
     try {
       var email = req.body.email;
       var password = req.body.password;
-      client.connect();
-      const result = client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password]);
       console.log(email);
       console.log(password);
-      console.log(result.rowCount);
-      console.log(result);
-      if (result.rowCount == 1) {
-        res.render('pages/contact', { 'contact': result.rows[0] } );
-      } else {
-        res.render('pages/login');
-      }
-      client.end();
+      client.connect();
+      client.query('SELECT * FROM salesforce.contact WHERE email=$1 AND password__c=$2', [email, password], (err, res) => {
+        if (err) throw err;
+
+        console.log(res.rowCount);
+        console.log(res);
+        if (res.rowCount == 1) {
+          res.render('pages/contact', { 'contact': res.rows[0] } );
+        } else {
+          res.render('pages/login');
+        }
+        client.end();
+      });
     } catch (err) {
       console.error(err);
       res.send("Error " + err);
