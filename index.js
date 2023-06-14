@@ -22,13 +22,13 @@ const PORT = process.env.PORT || 5001
 
 express()
   .use(express.static(path.join(__dirname, 'public')))
+  .use(express.urlencoded())
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
   .get('/', (req, res) => res.render('pages/index'))
   .get('/login', (req, res) => res.render('pages/login'))
   .post('/login', (req, res) => {
     try {
-      console.log(req);
       var email = req.body.email;
       var password = req.body.password;
       client.connect();
