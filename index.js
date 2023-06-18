@@ -32,8 +32,8 @@ express()
   .use(express.urlencoded())
   .set('views', path.join(__dirname, 'views'))
   .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
-  .get('/login', (req, res) => res.render('pages/login', { 'error' : ''}))
+  .get('/', (req, res) => res.render('pages/index', {'connected': req.session.loggedIn}))
+  .get('/login', (req, res) => res.render('pages/login', { 'error' : '', 'connected': req.session.loggedIn}))
   .post('/login', (req, res) => {
     try {
       var email = req.body.email;
@@ -84,9 +84,9 @@ express()
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM salesforce.contact WHERE email=$1', [req.session.email]);
         if (result.rowCount == 1) {
-          res.render('pages/profile-edit', { 'contact': result.rows[0], 'connected': req.session.loggedIn } );
+          res.render('pages/profile-edit', { 'error' : '', 'connected': req.session.loggedIn, 'contact': result.rows[0], 'connected': req.session.loggedIn } );
         } else {
-          res.render('pages/profile-edit', { 'contact': null } );
+          res.render('pages/profile-edit', { 'error' : '', 'connected': req.session.loggedIn, 'contact': null } );
         }
         client.release();
       } catch (err) {
