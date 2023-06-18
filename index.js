@@ -132,7 +132,7 @@ express()
       try {
         const client = await pool.connect();
         await client.query(
-          'INSERT salesforce.contact (lastname, firstname, phone, mobilephone, email, password__c) VALUES ($1, $2, $3, $4, $5, $6)',
+          'INSERT salesforce.contact (lastname, firstname, phone, mobilephone, email, password__c, externalid__c) VALUES ($1, $2, $3, $4, $5, $6, $5)',
           [req.body.lastname, req.body.firstname, req.body.phone, req.body.mobilephone, req.body.email, req.body.password]
         );
         client.release();
