@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include ("../partials/header.ejs") %>
+</head>
+
+<body>
+
+<%- include ("../partials/nav.ejs") %>
+
+<div class="container">
+  <h2>Create Profile</h2>
+
+  <form action="/profile/create" method="POST">
+    <table>
+      <tr>
+        <th>Last Name</th>
+        <td><input type="text" name="lastname" value=""></td>
+      </tr>
+      <tr>
+        <th>First Name</th>
+        <td><input type="text" name="firstname" value=""></td>
+      </tr>
+      <tr>
+        <th>Phone</th>
+        <td><input type="text" name="phone" value=""></td>
+      </tr>
+      <tr>
+        <th>Mobile Phone</th>
+        <td><input type="text" name="mobilephone" value=""></td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td><input type="text" name="email" value=""></td>
+      </tr>
+      <tr>
+        <th>Password</th>
+        <td><input type="password" name="password" value=""></td>
+      </tr>
+    </table>
+    <a class="btn btn-default" href="/" role="button">Cancel</a> / <button class="btn btn-default">Submit</button>
+  </form>
+  <% if (error) { %>
+    <div class="alert alert-danger" role="alert"><%= error %></div>
+  <% } %>
+
+</div>
+
+</body>
+</html>

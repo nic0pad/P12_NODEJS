@@ -51,12 +51,12 @@ express()
           req.session.email = email;
           res.render('pages/profile', { 'contact': result.rows[0], 'connected': req.session.loggedIn } );
         } else {
-          res.render('pages/login', { 'error' : 'Wrong Email or Password !' });
+          res.render('pages/login', { 'error' : 'Wrong Email or Password !', 'connected': req.session.loggedIn });
         }
       });
     } catch (err) {
       console.error(err);
-      res.render('pages/login', { 'error' : 'Error, contact admin !' });
+      res.render('pages/login', { 'error' : 'Error, contact admin !', 'connected': req.session.loggedIn });
     }
   })
   .get('/profile', async (req, res) => {
@@ -91,7 +91,7 @@ express()
         client.release();
       } catch (err) {
         console.error(err);
-        res.send("Error " + err);
+        res.render('pages/profile-edit', { 'error' : err, 'connected': req.session.loggedIn, 'contact': null } );
       }
     } else {
       res.redirect('/login');
@@ -113,6 +113,36 @@ express()
       }
     } else {
       res.redirect('/login');
+    }
+  })
+  .get('/profile/create', async (req, res) => {
+    if(!req.session.loggedIn) {
+      try {
+        res.render('pages/profile-create', { 'error' : '', 'connected': req.session.loggedIn } );
+      } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+      }
+    } else {
+      res.redirect('/profile');
+    }
+  })
+  .post('/profile/create', async (req, res) => {
+    if(!req.session.loggedIn) {
+      try {
+        const client = await pool.connect();
+        await client.query(
+          'INSERT salesforce.contact SET lastname=$1, firstname=$2, phone=$3, mobilephone=$4, email=$5, password__c=$6',
+          [req.body.lastname, req.body.firstname, req.body.phone, req.body.mobilephone, req.body.email, req.body.password]
+        );
+        client.release();
+        res.redirect('/');
+      } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+      }
+    } else {
+      res.redirect('/profile');
     }
   })
   .get('/products', async (req, res) => {
