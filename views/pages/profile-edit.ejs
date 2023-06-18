@@ -26,8 +26,12 @@
         <th>Phone</th>
         <td><input type="text" name="phone" value="<%= contact.phone %>"></td>
       </tr>
+      <tr>
+        <th>Mobile Phone</th>
+        <td><input type="text" name="phone" value="<%= contact.mobilephone %>"></td>
+      </tr>
     </table>
-    <button>Submit</button>
+    <a class="btn btn-default" href="/profile" role="button">Cancel</a> / <button class="btn btn-default">Submit</button>
   </form>
   <% if (error) { %>
     <div class="alert alert-danger" role="alert"><%= error %></div>

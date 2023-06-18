@@ -102,8 +102,8 @@ express()
       try {
         const client = await pool.connect();
         await client.query(
-          'UPDATE salesforce.contact SET lastname=$1, firstname=$2, phone=$3  WHERE email=$4',
-          [req.body.lastname, req.body.firstname, req.body.phone, req.session.email]
+          'UPDATE salesforce.contact SET lastname=$1, firstname=$2, phone=$3, mobilephone=$4  WHERE email=$5',
+          [req.body.lastname, req.body.firstname, req.body.phone, req.body.mobilephone, req.session.email]
         );
         client.release();
         res.redirect('/profile');
