@@ -4,6 +4,7 @@
       <li class="active">
         <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
       </li>
+      <% if (connected) { %>
       <li>
         <a href="/profile"><span class="glyphicon glyphicon-user"></span> Profile</a>
       </li>
@@ -13,10 +14,15 @@
       <li>
         <a href="/products"><span class="glyphicon glyphicon-book"></span> Products</a>
       </li>
+      <% } %>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li class="navbar-right">
+        <% if (connected) { %>
         <a href="/login"><span class="glyphicon glyphicon-user"></span> Login</a>
+        <% } else { %>
+          <a href="/logout"><span class="glyphicon glyphicon-user"></span> Logout</a>
+        <% } %>
       </li>
     </ul>
   </div>

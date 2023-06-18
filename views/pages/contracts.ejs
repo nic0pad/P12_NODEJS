@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include ("../partials/header.ejs") %>
+</head>
+
+<body>
+
+<%- include ("../partials/nav.ejs") %>
+
+<div class="container">
+<h2>Contracts</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Status</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% results.forEach(function(r) { %>
+    <tr>
+      <td><%= r.sfid %></td>
+      <td><%= r.status %></td>
+      <td><%= r.startdate %></td>
+      <td><%= r.enddate %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include ("../partials/header.ejs") %>
+</head>
+
+<body>
+
+<%- include ("../partials/nav.ejs") %>
+
+<div class="container">
+<h2>Edit Profile</h2>
+
+<% if (contact) { %>
+  <form action="/profile/edit" method="POST">
+    <table>
+      <tr>
+        <th>Last Name</th>
+        <td><input type="text" name="name" value="<%= contact.lastname %>"></td>
+      </tr>
+      <tr>
+        <th>First Name</th>
+        <td><input type="text" name="name" value="<%= contact.firstname %>"></td>
+      </tr>
+      <tr>
+        <th>Phone</th>
+        <td><input type="text" name="phone" value="<%= contact.phone %>"></td>
+      </tr>
+    </table>
+    <button>Submit</button>
+  </form>
+  <% if (error) { %>
+    <div class="alert alert-danger" role="alert"><%= error %></div>
+  <% } %>
+<% } else { %>
+  <div class="alert alert-danger" role="alert">Contact not found...</div>
+<% } %>
+</div>
+
+</body>
+</html>
