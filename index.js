@@ -102,8 +102,8 @@ express()
       try {
         const client = await pool.connect();
         await client.query(
-          'UPDATE salesforce.contact SET lastname=$1, firstname=$2, phone=$3, mobilephone=$4  WHERE email=$5',
-          [req.body.lastname, req.body.firstname, req.body.phone, req.body.mobilephone, req.session.email]
+          'UPDATE salesforce.contact SET lastname=$1, firstname=$2, phone=$3, mobilephone=$4, name=$6  WHERE email=$5',
+          [req.body.lastname, req.body.firstname, req.body.phone, req.body.mobilephone, req.session.email, req.body.firstname + ' ' + req.body.lastname]
         );
         client.release();
         res.redirect('/profile');
@@ -132,8 +132,8 @@ express()
       try {
         const client = await pool.connect();
         await client.query(
-          'INSERT INTO salesforce.contact (lastname, firstname, phone, mobilephone, email, password__c, externalid__c) VALUES ($1, $2, $3, $4, $5, $6, $5)',
-          [req.body.lastname, req.body.firstname, req.body.phone, req.body.mobilephone, req.body.email, req.body.password]
+          'INSERT INTO salesforce.contact (lastname, firstname, phone, mobilephone, email, password__c, externalid__c, name) VALUES ($1, $2, $3, $4, $5, $6, $5, $7)',
+          [req.body.lastname, req.body.firstname, req.body.phone, req.body.mobilephone, req.body.email, req.body.password, req.body.firstname + ' ' + req.body.lastname]
         );
         client.release();
         res.redirect('/');
